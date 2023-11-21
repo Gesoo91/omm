@@ -36,6 +36,8 @@ jsp 게시판 서비스와 컨트롤러 나누는거 다시 공부.
 1. 베스트 게시판 만들기 : 좋아요 순으로 select*from omm_roulette order by r_total_like desc; 로 좋아요 순 내림차순 정렬로 보여주게하자. for문으로 list next 뽑아내기.
 	list = 좋아요 높은순으로 부터 top10 = select*from omm_roulette 해서 불러오고 페이징처리
 	-----좋아요 순으로 내림차순 까지 완성. 페이징 해야함
+	-----bsetboard.jsp에서 직접 불러오던 것을 dao의 list를 통해 적히도록 변경
+	=>배운것 Dao와 Dto에 해당 데이터 베이스와 같은 함수 및 클래스를 작성하고 사용할 수 있게 하여 캡슐화 시킴.
 2. 	todo:	필터 만들어서 카테고리별 랭킹도 만들자 / 	데이터 추가 입력해두자(mysql에서 직접 넣어두기) /	우선 r_total_like 먼저 완성하고 주간,월간 만들자.
 
 3.좋아요 누르면 좋아요 누른애 개별페이지로 이동하게하자
