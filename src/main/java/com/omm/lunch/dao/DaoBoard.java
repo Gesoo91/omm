@@ -146,6 +146,23 @@ public class DaoBoard extends Dao{
 		super.close();	//[고정4,5]
 		return count;
 	}
+	public int getPostCountBest() {
+		int count = 0;
+		super.connect();	//[고정1,2,3]
+		try {
+			String sql = String.format(
+					"select count(*) from %s"
+					,Board.BOARD_BEST);
+			System.out.println("sql:"+sql);//todo
+			ResultSet rs = st.executeQuery(sql);
+			rs.next();
+			count = rs.getInt("count(*)");
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		super.close();	//[고정4,5]
+		return count;
+	}
 	/* 총 글 수 구하기 */
 	public int getSearchPostCount(String word) {
 		int count = 0;
@@ -221,5 +238,38 @@ public class DaoBoard extends Dao{
 			totalPageCount = count / 5 + 1;
 		}
 		return totalPageCount;
-	}	
+	}
+	public ArrayList<Dto> listBest(String page) {
+        super.connect();
+        ArrayList<Dto> posts = new ArrayList<>();
+
+        try {
+            int startIndex = ((Integer.parseInt(page)) - 1) * Board.LIST_AMOUNT;
+            
+            // 수정된 부분
+            String sql = String.format(
+                    "select * from %s order by r_total_like desc limit %s,%s",
+                    Board.BOARD_BEST, startIndex, Board.LIST_AMOUNT);
+
+            ResultSet rs = st.executeQuery(sql);
+
+            while (rs.next()) {
+                posts.add(new Dto(
+                        rs.getString("r_no"),
+                        rs.getString("r_menu"),
+                        rs.getString("r_category"),
+                        rs.getString("r_total_like")
+                        // ... (다른 필요한 속성들 추가)
+                ));
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            super.close();
+        }
+
+        return posts;
+    }
+
+	
 }

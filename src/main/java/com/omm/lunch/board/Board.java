@@ -5,7 +5,8 @@ public class Board {
 	static public final int PAGE_LINK_AMOUNT = 5;	//페이지 링크 한 블럭에 보일 페이지 링크 갯수(<이전> 1,2,3<다음> 이런식.
 	
 	public static final String BOARD_MAIN = "omm_board";	//*에다가 테이블 이름 넣으면됨.
-	
+    public static final String BOARD_BEST = "omm_roulette";
+
 	
 	int totalPage = 0;
 }

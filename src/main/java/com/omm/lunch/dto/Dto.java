@@ -9,6 +9,11 @@ public class Dto {
 	public String hit;        
 	public String replyCount;
 	public String replyOri;
+	public String menu;
+	public String category;
+	public String total_like;
+	
+	
 	
 	public Dto(String title, String id, String text) {
 		this.title = title;
@@ -32,4 +37,10 @@ public class Dto {
 		this.text = text;
 	}
 	//todo : board3에 맞게 Dto를 변경해줘야함. 아마 dao에 매개변수들도 순서조정을 해줘야 할수도잇다.
+	public Dto(String no, String menu, String category, String total_like) {
+		this.no = no;
+		this.menu = menu;
+		this.category = category;
+		this.total_like = total_like;
+	}
 }

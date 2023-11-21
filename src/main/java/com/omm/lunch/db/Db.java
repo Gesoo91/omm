@@ -4,7 +4,7 @@ public class Db {
 	static public String DB_JDBC_DRIVER_PACKAGE_PATH = "com.mysql.cj.jdbc.Driver";	//mysql 상수들은 대문자로 만든다.
 //	static private String DB_JDBC_DRIVER_PACKAGE_PATH = "oracle.jdbc.OracleDriver";	//오라클
 	
-	static private String DB_NAME = "omm_user";
+	static private String DB_NAME = "my_cat";
 	static private String DB_URL_MYSQL = "jdbc:mysql://localhost:3306/"+DB_NAME;	//mysql
 //	static private String DB_URL_ORACLE = "jdbc:oracle:thin:@127.0.0.1:1521:"+DB_NAME;	//오라클
 	static public String DB_URL = DB_URL_MYSQL;	//디비 바뀌면 여기 바꾸시오. 상수를 두번처리함.(구분용)
