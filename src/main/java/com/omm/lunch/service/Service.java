@@ -23,7 +23,9 @@ public class Service {
 	public void edit(Dto d,String no) {
 		dao.edit(d,no);
 	}
-	
+	public ArrayList<Dto> listBest(String page) {
+		return dao.listBest(page);
+	}
 	//dao 관련없는 함수들 이동
 	/* 총 페이지 수 구하기 */
 	public int getTotalPageCount() {

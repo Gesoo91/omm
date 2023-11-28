@@ -17,7 +17,7 @@
 <body>
 	<div id="header">
 		<div id="logo">
-			<a href="index.jsp">practice board</a>
+			<a href="/">practice board</a>
 		</div>
 	</div>
 	<hr>

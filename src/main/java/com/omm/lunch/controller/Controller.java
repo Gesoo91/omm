@@ -75,6 +75,12 @@ public class Controller extends HttpServlet {
 				ArrayList<Dto> posts = service.list();
 				request.setAttribute("posts", posts);
 				break;
+			case "/bestboard":
+				System.out.println("베스트 보드");
+				nextPage="/bestboard.jsp";
+				String page = request.getParameter("page");
+				ArrayList<Dto> bestposts = service.listBest(page);
+				request.setAttribute("posts", bestposts);
 			}
 			RequestDispatcher d = request.getRequestDispatcher(nextPage);
 			d.forward(request,response);
