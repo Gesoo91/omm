@@ -32,7 +32,7 @@
 				</ul>
 				<ul>
 				<li class="tab_head">게시판</li><!-- 이부분 없애도될듯 -->
-				<li><a href="freeList.jsp">자유게시판</a></li>
+				<li><a href="/lunch/freeList">자유게시판</a></li>
 				<li><a href="reqList.jsp">건의게시판</a></li>
 				</ul>
 			</div>
