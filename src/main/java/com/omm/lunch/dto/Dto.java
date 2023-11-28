@@ -43,4 +43,12 @@ public class Dto {
 		this.category = category;
 		this.total_like = total_like;
 	}
+	public Dto(String no, String title, String text, String id, String category) {
+		this.no = no;
+		this.title = title;
+		this.text = text;
+		this.id = id;
+		this.category = category;
+		
+	}
 }
