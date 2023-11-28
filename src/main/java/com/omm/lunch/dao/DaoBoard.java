@@ -100,17 +100,19 @@ public class DaoBoard extends Dao{
 					"select * from %s"
 					,Board.BOARD_MAIN);
 			System.out.println("sql:"+sql);
+			System.out.print("posts size: "+posts.size());
 			ResultSet rs = st.executeQuery(sql);
 			while(rs.next()) {				
 				posts.add(new Dto(
 						rs.getString("l_no"),
 						rs.getString("l_title"),
-						rs.getString("l_content"),
-						rs.getString("l_id"),
-						rs.getString("l_time"),
+						rs.getString("l_text"),
+						rs.getString("l_datetime"),
 						rs.getString("l_hit"),
+						rs.getString("l_reply_ori"),
 						rs.getString("l_reply_count"),
-						rs.getString("l_reply_ori")
+						rs.getString("l_id"),
+						rs.getString("l_category")
 						));
 			}
 		} catch (Exception e) {

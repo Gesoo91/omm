@@ -22,6 +22,18 @@ public class Dto {
 	}  
 	//alt + shift + s 코드 자동 삽입
 	public Dto(String no, String title, String text, String id, String datetime, String hit, String replyCount,
+			String replyOri, String category) {
+		this.no = no;
+		this.title = title;
+		this.text = text;
+		this.datetime = datetime;
+		this.hit = hit;
+		this.replyOri = replyOri;
+		this.replyCount = replyCount;
+		this.id = id;
+		this.category = category;
+	}
+	public Dto(String no, String title, String text, String id, String datetime, String hit, String replyCount,
 			String replyOri) {
 		this.no = no;
 		this.title = title;
