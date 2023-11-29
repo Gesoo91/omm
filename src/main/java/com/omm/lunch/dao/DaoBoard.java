@@ -9,11 +9,13 @@ import com.omm.lunch.dto.Dto;
 
 public class DaoBoard extends Dao{
 	/* (1/5)삭제 */
-	public void del(String no) {
+	public void del(String category, String no) {
 		super.connect();	//conect()라고 해도 됨.	//[고정1,2,3]
 //		connect();
-		String sql = String.format("delete from %s where l_no=%s"
-				,Board.BOARD_MAIN, no);
+		String sql = String.format("delete from %s where l_no=%s and l_category like '%s'"
+				,Board.BOARD_MAIN
+				,no
+				,category);
 		super.update(sql);
 		super.close();	//[고정4,5]
 	}
@@ -21,34 +23,38 @@ public class DaoBoard extends Dao{
 	public void write(Dto d) {
 		super.connect();	//[고정1,2,3]
 		String sql = String.format(
-				"insert into %s (l_title,l_id,l_content) values ('%s','%s','%s')"
-				,Board.BOARD_MAIN, d.title,d.id,d.text);
+				"insert into %s (l_category,l_title,l_id,l_text) values ('%s','%s','%s','%s')"
+				,Board.BOARD_MAIN
+				,d.category
+				,d.title
+				,d.id
+				,d.text);
 		super.update(sql);
 		super.close();	//[고정4,5]
 	}
 	/* (3/5)글 읽기 */
-	public Dto read(String no) {
+	public Dto read(String category, String no) {
 		super.connect();	//[고정1,2,3]
 		Dto post = null;
 		try {
-			//여기에 코딩하시오:
-			//sql 되는거 예문 아래에 복붙해두고 비교해서 작성하시고. (실무에선 혼남. 지울것)
-//			select * from ps_board_free where b_no=4;
 			String sql = String.format(
-					"select * from %s where l_no=%s"
-					,Board.BOARD_MAIN, no);
+					"select l_category,l_no,l_title,l_id,l_datetime,l_hit,l_text,l_reply_count,l_reply_ori from %s where l_no=%s and l_category like '%s'"
+					,Board.BOARD_MAIN
+					,no
+					,category);
 			System.out.println("sql:"+sql);//todo
 			ResultSet rs = st.executeQuery(sql);
 			rs.next();
 			post = new Dto(
 					rs.getString("l_no"),
 					rs.getString("l_title"),
-					rs.getString("l_content"),
-					rs.getString("l_id"),
-					rs.getString("l_time"),
+					rs.getString("l_text"),
+					rs.getString("l_datetime"),
 					rs.getString("l_hit"),
-					rs.getString("l_REPLY_COUNT"),
-					rs.getString("l_REPLY_ORI")
+					rs.getString("l_reply_ori"),
+					rs.getString("l_reply_count"),
+					rs.getString("l_id"),
+					rs.getString("l_category")
 					);
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -92,13 +98,16 @@ public class DaoBoard extends Dao{
 		super.close();	//[고정4,5]
 		return posts;
 	}
-	public ArrayList<Dto> list() {
+	public ArrayList<Dto> list2(String category, int startIndex) {
 		super.connect();	//[고정1,2,3]
 		ArrayList<Dto> posts = new ArrayList<>();
 		try {
 			String sql = String.format(
-					"select * from %s"
-					,Board.BOARD_MAIN);
+					"select * from %s where l_category like '%s' limit %d,%d"
+					,Board.BOARD_MAIN
+					,category
+					,startIndex
+					,Board.LIST_AMOUNT);
 			System.out.println("sql:"+sql);
 			System.out.print("posts size: "+posts.size());
 			ResultSet rs = st.executeQuery(sql);
@@ -126,18 +135,21 @@ public class DaoBoard extends Dao{
 		super.connect();	//[고정1,2,3]
 		String sql = String.format(
 				"update %s set l_title='%s',l_content='%s' where l_no=%s"
-				,Board.BOARD_MAIN, d.title,d.text,no);
+				,Board.BOARD_MAIN
+				,d.title
+				,d.text
+				,no);
 		super.update(sql);
 		super.close();	//[고정4,5]
 	}	
 	/* 총 글 수 구하기 */
-	public int getPostCount() {
+	public int getPostCount(String category) {
 		int count = 0;
 		super.connect();	//[고정1,2,3]
 		try {
 			String sql = String.format(
-					"select count(*) from %s"
-					,Board.BOARD_MAIN);
+					"select count(*) from %s where l_category like '%s'"
+					,Board.BOARD_MAIN, category);
 			System.out.println("sql:"+sql);//todo
 			ResultSet rs = st.executeQuery(sql);
 			rs.next();
@@ -166,13 +178,15 @@ public class DaoBoard extends Dao{
 		return count;
 	}
 	/* 총 글 수 구하기 */
-	public int getSearchPostCount(String word) {
+	public int getSearchPostCount(String category, String word) {
 		int count = 0;
 		super.connect();	//[고정1,2,3]
 		try {
 			String sql = String.format(
-					"select count(*) from %s where l_title like '%%%s%%'"
-					,Board.BOARD_MAIN,word);
+					"select count(*) from %s where l_title like '%%%s%%' and l_category like '%s'"
+					,Board.BOARD_MAIN
+					,word
+					,category);
 			System.out.println("sql:"+sql);//todo
 			ResultSet rs = st.executeQuery(sql);
 			rs.next();
@@ -184,18 +198,13 @@ public class DaoBoard extends Dao{
 		return count;
 	}	
 	/* 글 리스트<검색> */
-	public ArrayList<Dto> listSearch(String word,String page) {
+	public ArrayList<Dto> list(String category, int startIndex, String word) {
 		super.connect();	//[고정1,2,3]
 		ArrayList<Dto> posts = new ArrayList<>();
 		try {
 
-			int startIndex = ((Integer.parseInt(page))-1)*3;
-			
-			//여기에 코딩하시오:
-			//sql 되는거 예문 아래에 복붙해두고 비교해서 작성하시고. (실무에선 혼남. 지울것)
-//			select * from ps_board_free where b_title like '%1%';
 			String sql = String.format(
-					"select * from %s where l_title like '%%%s%%' limit %s,3"
+					"select l_category,l_no,l_title,l_id,l_datetime,l_hit,l_text,l_reply_count,l_reply_ori from %s where l_title like '%%%s%%' and l_category like '%s' limit %s,%s"
 					,Board.BOARD_MAIN,word,startIndex);
 			System.out.println("sql:"+sql);
 			ResultSet rs = st.executeQuery(sql);
@@ -203,12 +212,13 @@ public class DaoBoard extends Dao{
 				posts.add(new Dto(
 						rs.getString("l_no"),
 						rs.getString("l_title"),
-						rs.getString("l_content"),
-						rs.getString("l_id"),
-						rs.getString("l_time"),
+						rs.getString("l_text"),
+						rs.getString("l_datetime"),
 						rs.getString("l_hit"),
+						rs.getString("l_reply_ori"),
 						rs.getString("l_reply_count"),
-						rs.getString("l_reply_ori")
+						rs.getString("l_id"),
+						rs.getString("l_category")
 						));
 			}
 		} catch (Exception e) {
@@ -220,7 +230,7 @@ public class DaoBoard extends Dao{
 	/* 총 페이지 수 구하기 */
 	public int getTotalPageCount() {
 		int totalPageCount = 0;
-		int count = getPostCount();	//만든거 재활용.
+		int count = getPostCount(null);	//만든거 재활용.
 		
 		if(count % 5 == 0){		//case1. 나머지가 없이 딱 떨어지는 경우
 			totalPageCount = count / 5;
@@ -230,9 +240,9 @@ public class DaoBoard extends Dao{
 		return totalPageCount;
 	}	
 	/* 총 페이지 수 구하기<검색> */
-	public int getSearchTotalPageCount(String word) {
+	public int getSearchTotalPageCount(String category, String word) {
 		int totalPageCount = 0;
-		int count = getSearchPostCount(word);
+		int count = getSearchPostCount(category, word);
 		
 		if(count % 5 == 0){		//case1. 나머지가 없이 딱 떨어지는 경우
 			totalPageCount = count / 5;
