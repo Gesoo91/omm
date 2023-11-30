@@ -29,6 +29,7 @@ public class DaoBoard extends Dao{
 				,d.title
 				,d.id
 				,d.text);
+		System.out.println("쓰기sql:"+sql);
 		super.update(sql);
 		super.close();	//[고정4,5]
 	}
@@ -109,7 +110,7 @@ public class DaoBoard extends Dao{
 					,startIndex
 					,Board.LIST_AMOUNT);
 			System.out.println("sql:"+sql);
-			System.out.print("posts size: "+posts.size());
+			System.out.print("list2에 posts size: "+posts.size());
 			ResultSet rs = st.executeQuery(sql);
 			while(rs.next()) {				
 				posts.add(new Dto(

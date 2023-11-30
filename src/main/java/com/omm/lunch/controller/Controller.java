@@ -42,6 +42,7 @@ public class Controller extends HttpServlet {
 				System.out.println("/write후 category:"+category);
 				nextPage="/lunch/freeList";
 				Dto dto = new Dto(
+						category,
 						request.getParameter("title"),
 						request.getParameter("id"),
 						request.getParameter("text")
