@@ -18,7 +18,7 @@
 <body>
 <%
 BoardListProcessor blp = (BoardListProcessor)request.getAttribute("blp");
-System.out.println("blp:"+blp);
+System.out.println("리스트에서blp:"+blp);
 ArrayList<Dto> posts = blp.getPosts();
 
 %>
@@ -43,8 +43,8 @@ for(int i=0;i<posts.size();i=i+1){
 </fieldset>
 <fieldset>
 	<legend>링크</legend>
-	<a href="/lunch/write.jsp?category=<%=blp.category%>">쓰기</a>
-	<a href="/lunch/freelist?category=<%=blp.category%>&">list로</a>
+	<a href="/write.jsp?category=<%=blp.category%>">쓰기</a>
+	<a href="/lunch/freeList?category=<%=blp.category%>">list로</a>
 	<a href="/">홈으로</a>
 </fieldset>
 <fieldset>

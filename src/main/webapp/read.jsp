@@ -21,9 +21,9 @@ String category = request.getParameter("category");
 <hr>
 <%=d.text%>
 <hr>
-<a href="/board/del?category=<%=category%>&no=<%=d.no%>">삭제</a>
-<a href="/board/edit_insert?category=<%=category%>&no=<%=d.no%>">수정</a>
-<a href="/board/list?category=<%=category%>">리스트로</a>
+<a href="/lunch/del?category=<%=category%>&no=<%=d.no%>">삭제</a>
+<a href="/lunch/edit_insert?category=<%=category%>&no=<%=d.no%>">수정</a>
+<a href="/lunch/freeList?category=<%=category%>">리스트로</a>
 <a href="/">홈으로</a>
 </body>
 </html>

@@ -17,13 +17,13 @@ String category = request.getParameter("category");
 
 카테고리:<%=category%>
 <hr>
-<form action="/board/edit_proc">
+<form action="/lunch/edit_proc">
 	<input type="hidden" name="category" value="<%=category%>">
 	<input type="hidden" name="no" value="<%=dto.no%>"> 
 	<input name="title" value="<%=dto.title%>">
 	<input name="text" value="<%=dto.text%>">
 	<input type="submit" value="수정">
 </form>
-<a href="/board/list?category=<%=category%>">리스트로</a> <a href="/">홈으로</a>
+<a href="/lunch/freeList?category=<%=category%>">리스트로</a> <a href="/">홈으로</a>
 </body>
 </html>

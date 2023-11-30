@@ -10,7 +10,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.omm.lunch.dao.DaoBoard;
 import com.omm.lunch.dto.Dto;
 import com.omm.lunch.service.Service;
 import com.omm.lunch.board.BoardListProcessor;
@@ -18,16 +17,15 @@ import com.omm.lunch.board.BoardListProcessor;
 @WebServlet("/lunch/*")
 public class Controller extends HttpServlet {
 	String nextPage;
-	DaoBoard dao;
 	Service service;
 	String category;
 	@Override
 	public void init() throws ServletException{
-		dao = new DaoBoard();
 		service = new Service();
 	}
 	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		category = request.getParameter("category");//카테고리 정의
 		String action = request.getPathInfo();
 		System.out.println("action:"+action);
 		if(action!=null) {
@@ -41,13 +39,15 @@ public class Controller extends HttpServlet {
 				break;
 			case "/write":
 				System.out.println("쓰기");
+				System.out.println("/write후 category:"+category);
 				nextPage="/lunch/freeList";
 				Dto dto = new Dto(
 						request.getParameter("title"),
 						request.getParameter("id"),
 						request.getParameter("text")
 						);
-				service.write(dto);				
+				service.write(dto);	
+				
 				break;
 			case "/edit_insert"://했음
 				System.out.println("수정-insert");

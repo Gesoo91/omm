@@ -11,8 +11,9 @@
 <%
 	String category = request.getParameter("category");
 %>
-<form action="/board/write">
+<form action="/lunch/write">
 	<input type="hidden" name="category" value="<%=category%>">
+	<%System.out.println(category); %>
 	<input name="title" placeholder="제목">
 	<input name="id" placeholder="작성자id">
 	<input name="text" placeholder="내용">
