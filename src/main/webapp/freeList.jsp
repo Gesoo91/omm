@@ -49,7 +49,7 @@ for(int i=0;i<posts.size();i=i+1){
 </fieldset>
 <fieldset>
 	<legend>검색</legend>
-	<form action="/lunch/freelist">
+	<form action="/lunch/freeList">
 		<input type="hidden" name="category" value="<%=blp.category%>">
 		<input name="word">
 		<input type="submit" value="검색">

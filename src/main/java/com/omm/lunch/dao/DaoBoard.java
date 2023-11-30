@@ -85,7 +85,7 @@ public class DaoBoard extends Dao{
 				posts.add(new Dto(
 						rs.getString("l_no"),
 						rs.getString("l_title"),
-						rs.getString("l_content"),
+						rs.getString("l_text"),
 						rs.getString("l_id"),
 						rs.getString("l_time"),
 						rs.getString("l_hit"),
@@ -135,7 +135,7 @@ public class DaoBoard extends Dao{
 	public void edit(Dto d,String no) {
 		super.connect();	//[고정1,2,3]
 		String sql = String.format(
-				"update %s set l_title='%s',l_content='%s' where l_no=%s"
+				"update %s set l_title='%s',l_text='%s' where l_no=%s"
 				,Board.BOARD_MAIN
 				,d.title
 				,d.text
@@ -268,7 +268,6 @@ public class DaoBoard extends Dao{
 
             while (rs.next()) {
                 posts.add(new Dto(
-                        rs.getString("r_no"),
                         rs.getString("r_menu"),
                         rs.getString("r_category"),
                         rs.getString("r_total_like")

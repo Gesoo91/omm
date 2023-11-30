@@ -125,9 +125,9 @@ public class BoardListProcessor {
 		//🐿️🐿️🐿️: 이전 블럭 이동이 가능하면 미리 계산한 이전 블록 이동 시 이동 할 페이지번호를 랑크에 전달하기🐿️🐿️🐿️//
 		if(hasPrev){
 			if(word==null) {
-				html=html+String.format("<a href='/lunch/freelist?category=%s&page=%d'>🐿️이전블럭가기🐿️</a>",category,prevPage);
+				html=html+String.format("<a href='/lunch/freeList?category=%s&page=%d'>🐿️이전블럭가기🐿️</a>",category,prevPage);
 			}else {
-				html=html+String.format("<a href='/lunch/freelist?category=%s&page=%d&word=%s'>🐿️이전블럭가기🐿️</a>",category,prevPage,word);
+				html=html+String.format("<a href='/lunch/freeList?category=%s&page=%d&word=%s'>🐿️이전블럭가기🐿️</a>",category,prevPage,word);
 			}
 		}		
 		
@@ -135,9 +135,9 @@ public class BoardListProcessor {
 		//🐿️🐿️🐿️현재 블럭의 페이지 시작번호와 끝번호를 이용하여 반복문의 시작값 끝값으로 하고 이 값을 페이지 번호로 출력하기🐿️🐿️🐿️		
 		for(int i=blockStartNo;i<=blockEndNo;i++){	// 	<< 이렇게 바꿈
 			if(word==null) {
-				html = html + String.format("<a href='/lunch/freelist?category=%s&page=%d'>%d</a>&nbsp;&nbsp;",category,i,i);
+				html = html + String.format("<a href='/lunch/freeList?category=%s&page=%d'>%d</a>&nbsp;&nbsp;",category,i,i);
 			}else {
-				html = html + String.format("<a href='/lunch/freelist?category=%s&page=%d&word=%s'>%d</a>&nbsp;&nbsp;",category,i,word,i);
+				html = html + String.format("<a href='/lunch/freeList?category=%s&page=%d&word=%s'>%d</a>&nbsp;&nbsp;",category,i,word,i);
 			}
 		}
 		
@@ -145,9 +145,9 @@ public class BoardListProcessor {
 		//🐿️🐿️🐿️: 다음 블럭 이동이 가능하면 미리 계산한 이전 블록 이동 시 이동 할 페이지번호를 랑크에 전달하기🐿️🐿️🐿️//
 		if(hasNext){
 			if(word==null) {
-				html=html+String.format("<a href='/lunch/freelist?category=%s&page=%d'>🐿️다음블럭가기🐿️</a>",category,nextPage);
+				html=html+String.format("<a href='/lunch/freeList?category=%s&page=%d'>🐿️다음블럭가기🐿️</a>",category,nextPage);
 			}else {
-				html=html+String.format("<a href='/lunch/freelist?category=%s&page=%d&word=%s'>🐿️다음블럭가기🐿️</a>",category,nextPage,word);
+				html=html+String.format("<a href='/lunch/freeList?category=%s&page=%d&word=%s'>🐿️다음블럭가기🐿️</a>",category,nextPage,word);
 			}			
 			
 		}		
