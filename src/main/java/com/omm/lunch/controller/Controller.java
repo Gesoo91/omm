@@ -82,6 +82,7 @@ public class Controller extends HttpServlet {
 				System.out.println("베스트 보드");
 				nextPage="/bestboard.jsp";
 				String page = request.getParameter("page");
+				System.out.println("page:"+page);
 				ArrayList<Dto> bestposts = service.listBest(page);
 				request.setAttribute("posts", bestposts);
 				break;

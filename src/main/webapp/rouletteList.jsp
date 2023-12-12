@@ -49,7 +49,7 @@ int count_no = 0;
 			    String no = rs.getString("r_no");
 			    String menu = rs.getString("r_menu");
 			    String category = rs.getString("r_category");
-			    String id = rs.getString("r_id");
+			    String id = rs.getString("r_user_id");
 			    String like = rs.getString("r_total_like");
 %>
 				<!-- 현재는 이 페이지에서 표현된다. 아래 표현태그때문에. 이걸 index에서 보이게 하려면 ajax나 session으로 처리하는거 챗gpt가 추천함 -->
@@ -66,7 +66,7 @@ int count_no = 0;
 			String no_sub = subRs.getString("r_no");
 		    String menu_sub = subRs.getString("r_menu");
 		    String category_sub = subRs.getString("r_category");
-		    String id_sub = subRs.getString("r_id");
+		    String id_sub = subRs.getString("r_user_id");
 		    String like_sub = subRs.getString("r_total_like");
 %>
 	    	<p>이건어떄? <%=menu_sub %></p><br>

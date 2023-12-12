@@ -23,7 +23,7 @@ public class DaoBoard extends Dao{
 	public void write(Dto d) {
 		super.connect();	//[고정1,2,3]
 		String sql = String.format(
-				"insert into %s (l_category,l_title,l_id,l_text) values ('%s','%s','%s','%s')"
+				"insert into %s (l_category,l_title,l_user_id,l_text) values ('%s','%s','%s','%s')"
 				,Board.BOARD_MAIN
 				,d.category
 				,d.title
@@ -39,7 +39,7 @@ public class DaoBoard extends Dao{
 		Dto post = null;
 		try {
 			String sql = String.format(
-					"select l_category,l_no,l_title,l_id,l_datetime,l_hit,l_text,l_reply_count,l_reply_ori from %s where l_no=%s and l_category like '%s'"
+					"select l_category,l_no,l_title,l_user_id,l_datetime,l_hit,l_text,l_reply_count,l_reply_ori from %s where l_no=%s and l_category like '%s'"
 					,Board.BOARD_MAIN
 					,no
 					,category);
@@ -54,7 +54,7 @@ public class DaoBoard extends Dao{
 					rs.getString("l_hit"),
 					rs.getString("l_reply_ori"),
 					rs.getString("l_reply_count"),
-					rs.getString("l_id"),
+					rs.getString("l_user_id"),
 					rs.getString("l_category")
 					);
 		} catch (Exception e) {
@@ -86,7 +86,7 @@ public class DaoBoard extends Dao{
 						rs.getString("l_no"),
 						rs.getString("l_title"),
 						rs.getString("l_text"),
-						rs.getString("l_id"),
+						rs.getString("l_user_id"),
 						rs.getString("l_time"),
 						rs.getString("l_hit"),
 						rs.getString("l_reply_count"),
@@ -110,6 +110,7 @@ public class DaoBoard extends Dao{
 					,startIndex
 					,Board.LIST_AMOUNT);
 			System.out.println("sql:"+sql);
+			System.out.println("startIndex:"+startIndex);
 			System.out.print("list2에 posts size: "+posts.size());
 			ResultSet rs = st.executeQuery(sql);
 			while(rs.next()) {				
@@ -121,7 +122,7 @@ public class DaoBoard extends Dao{
 						rs.getString("l_hit"),
 						rs.getString("l_reply_ori"),
 						rs.getString("l_reply_count"),
-						rs.getString("l_id"),
+						rs.getString("l_user_id"),
 						rs.getString("l_category")
 						));
 			}
@@ -188,7 +189,7 @@ public class DaoBoard extends Dao{
 					,Board.BOARD_MAIN
 					,word
 					,category);
-			System.out.println("sql:"+sql);//todo
+			System.out.println("총글수sql:"+sql);//todo
 			ResultSet rs = st.executeQuery(sql);
 			rs.next();
 			count = rs.getInt("count(*)");
@@ -205,8 +206,8 @@ public class DaoBoard extends Dao{
 		try {
 
 			String sql = String.format(
-					"select l_category,l_no,l_title,l_id,l_datetime,l_hit,l_text,l_reply_count,l_reply_ori from %s where l_title like '%%%s%%' and l_category like '%s' limit %s,%s"
-					,Board.BOARD_MAIN,word,startIndex);
+					"select l_category,l_no,l_title,l_user_id,l_datetime,l_hit,l_text,l_reply_count,l_reply_ori from %s where l_title like '%%%s%%' and l_category like '%s' limit %s,%s"
+					,Board.BOARD_MAIN,word,category,startIndex,Board.LIST_AMOUNT);
 			System.out.println("sql:"+sql);
 			ResultSet rs = st.executeQuery(sql);
 			while(rs.next()) {				
@@ -218,7 +219,7 @@ public class DaoBoard extends Dao{
 						rs.getString("l_hit"),
 						rs.getString("l_reply_ori"),
 						rs.getString("l_reply_count"),
-						rs.getString("l_id"),
+						rs.getString("l_user_id"),
 						rs.getString("l_category")
 						));
 			}
