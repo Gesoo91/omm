@@ -63,10 +63,10 @@
 	
 	//총 페이지 수 구하기
 	int totalPage = 0;
-	if(count % 3 == 0){		//case1. 나머지가 없이 딱 떨어지는 경우
-		totalPage = count / 3;
+	if(count % 5 == 0){		//case1. 나머지가 없이 딱 떨어지는 경우
+		totalPage = count / 5;
 	}else{					//case2. 나머지가 있어서 짜투리 페이지가 필요한 경우
-		totalPage = count / 3 + 1;
+		totalPage = count / 5 + 1;
 	}
 	
 	

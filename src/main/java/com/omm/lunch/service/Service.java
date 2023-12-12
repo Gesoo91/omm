@@ -30,6 +30,9 @@ public class Service {
 		dao.edit(d,no);
 	}
 	public ArrayList<Dto> listBest(String page) {
+		if(page==null) {
+			page="1";
+		}
 		return dao.listBest(page);
 	}
 	
