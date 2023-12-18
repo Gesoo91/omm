@@ -4,6 +4,7 @@
 <%@page import="java.sql.Statement"%>
 <%@page import="java.sql.DriverManager"%>
 <%@page import="java.sql.Connection"%>
+<%@page import="java.util.Calendar" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -20,19 +21,38 @@ try {
 	Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/my_cat", "root", "root");
 	Statement st = con.createStatement(); //공통부분 묶는거 해야할듯.
 	
-	String sql = "UPDATE omm_roulette SET r_total_like = r_total_like + 1 WHERE r_no = "+num;
-	System.out.println("전송할 sql문:"+sql);
-	int resultCount = st.executeUpdate(sql);//좋아요 카운트 올라가게함
-	if(resultCount == 1){
-		System.out.println("좋아요추가");
-	}
-	else{
-		System.out.println("추가실패");
-	}
-} catch(Exception e) {
-	e.printStackTrace();
+    // 현재 날짜와 주를 가져오기
+    Calendar cal = Calendar.getInstance();
+    int currentWeek = cal.get(Calendar.WEEK_OF_YEAR);
+
+    // 좋아요 업데이트 쿼리
+    String updateQuery = "UPDATE omm_roulette " +
+                         "SET r_total_like = r_total_like + 1, r_weekly_like = r_weekly_like + 1 " +
+                         "WHERE r_no = " + num;
+
+    // 쿼리 실행
+    int rowsAffected = st.executeUpdate(updateQuery);
+
+    if (rowsAffected > 0) {
+        out.println("좋아요가 업데이트되었습니다.");
+
+        // 한 주가 지나면 주간 좋아요 초기화
+        String resetWeeklyLikeQuery = "UPDATE omm_roulette " +
+                                      "SET r_weekly_like = 0 " +
+                                      "WHERE YEARWEEK(r_like_time) < " + currentWeek;
+
+        st.executeUpdate(resetWeeklyLikeQuery);
+    } else {
+        out.println("좋아요 업데이트에 실패했습니다.");
+    }
+
+    st.close();
+    con.close();
+} catch (Exception e) {
+    e.printStackTrace();
 }
-response.sendRedirect("rouletteList.jsp"); //todo: 룰렛으로 돌아가는게 아니라 좋아요 누른 녀석 개별 페이지로 이동하게 해주면 좋을듯
+response.sendRedirect("rouletteList.jsp");
 %>
+
 </body>
 </html>

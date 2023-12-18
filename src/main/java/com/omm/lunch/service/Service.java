@@ -2,7 +2,8 @@ package com.omm.lunch.service;
 import java.util.ArrayList;
 
 import com.omm.lunch.dao.DaoBoard;
-import com.omm.lunch.dto.Dto;
+import com.omm.lunch.dto.BoardDto;
+import com.omm.lunch.dto.RouletteDto;
 import com.omm.lunch.board.BoardListProcessor;
 public class Service {
 	DaoBoard dao;
@@ -12,10 +13,10 @@ public class Service {
 	public void del (String category, String no) {
 		dao.del(category, no);
 	}
-	public void write(Dto d) {
+	public void write(BoardDto d) {
 		dao.write(d);
 	}
-	public Dto read(String category, String no) {
+	public BoardDto read(String category, String no) {
 	 return dao.read(category, no); //read는 조회된 데이터를 dto객체로 생성해서 반환해야 하므로 return을 써서 호출한다. retrun post와 같은 개념.
 	}
 	public BoardListProcessor list(String category, String currentPage, String word) {
@@ -26,10 +27,10 @@ public class Service {
 		System.out.println("Category value: " + category); // 디버그용 출력
 		return blp;
 	}
-	public void edit(Dto d,String no) {
+	public void edit(BoardDto d,String no) {
 		dao.edit(d,no);
 	}
-	public ArrayList<Dto> listBest(String page) {
+	public ArrayList<RouletteDto> listBest(String page) {
 		if(page==null) {
 			page="1";
 		}

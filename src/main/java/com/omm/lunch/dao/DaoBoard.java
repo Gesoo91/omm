@@ -5,7 +5,8 @@ import java.util.ArrayList;
 
 import com.omm.lunch.board.Board;
 import com.omm.lunch.db.Dao;
-import com.omm.lunch.dto.Dto;
+import com.omm.lunch.dto.BoardDto;
+import com.omm.lunch.dto.RouletteDto;
 
 public class DaoBoard extends Dao{
 	/* (1/5)삭제 */
@@ -20,7 +21,7 @@ public class DaoBoard extends Dao{
 		super.close();	//[고정4,5]
 	}
 	/* (2/5)쓰기 */
-	public void write(Dto d) {
+	public void write(BoardDto d) {
 		super.connect();	//[고정1,2,3]
 		String sql = String.format(
 				"insert into %s (l_category,l_title,l_user_id,l_text) values ('%s','%s','%s','%s')"
@@ -34,9 +35,9 @@ public class DaoBoard extends Dao{
 		super.close();	//[고정4,5]
 	}
 	/* (3/5)글 읽기 */
-	public Dto read(String category, String no) {
+	public BoardDto read(String category, String no) {
 		super.connect();	//[고정1,2,3]
-		Dto post = null;
+		BoardDto post = null;
 		try {
 			String sql = String.format(
 					"select l_category,l_no,l_title,l_user_id,l_datetime,l_hit,l_text,l_reply_count,l_reply_ori from %s where l_no=%s and l_category like '%s'"
@@ -46,7 +47,7 @@ public class DaoBoard extends Dao{
 			System.out.println("sql:"+sql);//todo
 			ResultSet rs = st.executeQuery(sql);
 			rs.next();
-			post = new Dto(
+			post = new BoardDto(
 					rs.getString("l_no"),
 					rs.getString("l_title"),
 					rs.getString("l_text"),
@@ -65,9 +66,9 @@ public class DaoBoard extends Dao{
 	}	
 	/* (4/5)글 리스트 */
 	/* (4/5)글 리스트 */
-	public ArrayList<Dto> listbackup(String page) {
+	public ArrayList<BoardDto> listbackup(String page) {
 		super.connect();	//[고정1,2,3]
-		ArrayList<Dto> posts = new ArrayList<>();
+		ArrayList<BoardDto> posts = new ArrayList<>();
 		try {
 
 			int startIndex = ((Integer.parseInt(page))-1)*Board.LIST_AMOUNT;
@@ -82,7 +83,7 @@ public class DaoBoard extends Dao{
 			System.out.println("sql:"+sql);
 			ResultSet rs = st.executeQuery(sql);
 			while(rs.next()) {				
-				posts.add(new Dto(
+				posts.add(new BoardDto(
 						rs.getString("l_no"),
 						rs.getString("l_title"),
 						rs.getString("l_text"),
@@ -99,9 +100,9 @@ public class DaoBoard extends Dao{
 		super.close();	//[고정4,5]
 		return posts;
 	}
-	public ArrayList<Dto> list2(String category, int startIndex) {
+	public ArrayList<BoardDto> list2(String category, int startIndex) {
 		super.connect();	//[고정1,2,3]
-		ArrayList<Dto> posts = new ArrayList<>();
+		ArrayList<BoardDto> posts = new ArrayList<>();
 		try {
 			String sql = String.format(
 					"select * from %s where l_category like '%s' limit %d,%d"
@@ -114,7 +115,7 @@ public class DaoBoard extends Dao{
 			System.out.print("list2에 posts size: "+posts.size());
 			ResultSet rs = st.executeQuery(sql);
 			while(rs.next()) {				
-				posts.add(new Dto(
+				posts.add(new BoardDto(
 						rs.getString("l_no"),
 						rs.getString("l_title"),
 						rs.getString("l_text"),
@@ -133,7 +134,7 @@ public class DaoBoard extends Dao{
 		return posts;
 	}
 	/* (5/5)수정 */
-	public void edit(Dto d,String no) {
+	public void edit(BoardDto d,String no) {
 		super.connect();	//[고정1,2,3]
 		String sql = String.format(
 				"update %s set l_title='%s',l_text='%s' where l_no=%s"
@@ -200,9 +201,9 @@ public class DaoBoard extends Dao{
 		return count;
 	}	
 	/* 글 리스트<검색> */
-	public ArrayList<Dto> list(String category, int startIndex, String word) {
+	public ArrayList<BoardDto> list(String category, int startIndex, String word) {
 		super.connect();	//[고정1,2,3]
-		ArrayList<Dto> posts = new ArrayList<>();
+		ArrayList<BoardDto> posts = new ArrayList<>();
 		try {
 
 			String sql = String.format(
@@ -211,7 +212,7 @@ public class DaoBoard extends Dao{
 			System.out.println("sql:"+sql);
 			ResultSet rs = st.executeQuery(sql);
 			while(rs.next()) {				
-				posts.add(new Dto(
+				posts.add(new BoardDto(
 						rs.getString("l_no"),
 						rs.getString("l_title"),
 						rs.getString("l_text"),
@@ -253,9 +254,9 @@ public class DaoBoard extends Dao{
 		}
 		return totalPageCount;
 	}
-	public ArrayList<Dto> listBest(String page) {
+	public ArrayList<RouletteDto> listBest(String page) {
         super.connect();
-        ArrayList<Dto> posts = new ArrayList<>();
+        ArrayList<RouletteDto> posts = new ArrayList<>();
 
         try {
             int startIndex = ((Integer.parseInt(page)) - 1) * Board.LIST_AMOUNT;
@@ -268,10 +269,11 @@ public class DaoBoard extends Dao{
             ResultSet rs = st.executeQuery(sql);
 
             while (rs.next()) {
-                posts.add(new Dto(
+                posts.add(new RouletteDto(
                         rs.getString("r_menu"),
                         rs.getString("r_category"),
-                        rs.getString("r_total_like")
+                        rs.getString("r_total_like"),
+                        rs.getString("r_weekly_like")
                         // ... (다른 필요한 속성들 추가)
                 ));
             }
@@ -283,6 +285,6 @@ public class DaoBoard extends Dao{
 
         return posts;
     }
-
+	
 	
 }

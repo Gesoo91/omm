@@ -10,7 +10,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.omm.lunch.dto.Dto;
+import com.omm.lunch.dto.BoardDto;
+import com.omm.lunch.dto.RouletteDto;
 import com.omm.lunch.service.Service;
 import com.omm.lunch.board.BoardListProcessor;
 
@@ -41,7 +42,7 @@ public class Controller extends HttpServlet {
 				System.out.println("쓰기");
 				System.out.println("/write후 category:"+category);
 				nextPage="/lunch/freeList";
-				Dto dto = new Dto(
+				BoardDto dto = new BoardDto(
 						category,
 						request.getParameter("title"),
 						request.getParameter("id"),
@@ -59,7 +60,7 @@ public class Controller extends HttpServlet {
 				System.out.println("수정-proc");
 				nextPage="/lunch/freeList";
 				service.edit(
-						new Dto(
+						new BoardDto(
 								request.getParameter("title"),
 								request.getParameter("text")
 								)
@@ -69,7 +70,7 @@ public class Controller extends HttpServlet {
 			case "/read":
 				System.out.println("읽기");
 				nextPage="/read.jsp";
-				Dto d=service.read(category, request.getParameter("no"));
+				BoardDto d=service.read(category, request.getParameter("no"));
 				request.setAttribute("post", d);
 				break;
 			case "/freeList"://todo
@@ -83,9 +84,18 @@ public class Controller extends HttpServlet {
 				nextPage="/bestboard.jsp";
 				String page = request.getParameter("page");
 				System.out.println("page:"+page);
-				ArrayList<Dto> bestposts = service.listBest(page);
+				ArrayList<RouletteDto> bestposts = service.listBest(page);
 				request.setAttribute("posts", bestposts);
 				break;
+			case "/weeklyBest":
+				System.out.println("베스트 보드"
+						+ "");
+				nextPage="/weeklyBest.jsp";
+				String page2 = request.getParameter("page");
+				System.out.println("page:"+page2);
+				ArrayList<RouletteDto> weeklybestposts = service.listBest(page2);
+				request.setAttribute("posts", weeklybestposts);
+				break;	
 			}
 			RequestDispatcher d = request.getRequestDispatcher(nextPage);
 			d.forward(request,response);

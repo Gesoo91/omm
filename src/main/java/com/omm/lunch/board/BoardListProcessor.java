@@ -3,12 +3,12 @@ package com.omm.lunch.board;
 import java.util.ArrayList;
 
 import com.omm.lunch.dao.DaoBoard;
-import com.omm.lunch.dto.Dto;
+import com.omm.lunch.dto.BoardDto;
 
 public class BoardListProcessor {
 	private DaoBoard dao;
 	public String category;
-	public ArrayList<Dto> posts;
+	public ArrayList<BoardDto> posts;
 	public int totalPage = 0;	//전체 페이지 수.	🐇페이징🐇
 	public int currentPage = 0;	//현재 페이지 번호
 	public String word;			//검색어(있으면)
@@ -114,7 +114,7 @@ public class BoardListProcessor {
 		return totalPageCount;
 	}
 	/* 글 리스트 객체 얻는 함수 */
-	public ArrayList<Dto> getPosts() {
+	public ArrayList<BoardDto> getPosts() {
 		return posts;
 	}
 	/* 페이지 리스트들을 출력하기 위한 html을 리턴 */
