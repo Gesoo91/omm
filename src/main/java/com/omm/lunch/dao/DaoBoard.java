@@ -254,7 +254,7 @@ public class DaoBoard extends Dao{
 		}
 		return totalPageCount;
 	}
-	public ArrayList<RouletteDto> listBest(String page) {
+	public ArrayList<RouletteDto> listBest(String page, String orderByColumn) {
         super.connect();
         ArrayList<RouletteDto> posts = new ArrayList<>();
 
@@ -263,8 +263,8 @@ public class DaoBoard extends Dao{
             
             // 수정된 부분
             String sql = String.format(
-                    "select * from %s order by r_total_like desc limit %s,%s",
-                    Board.BOARD_BEST, startIndex, Board.LIST_AMOUNT);
+                    "select * from %s order by %s desc limit %s,%s",
+                    Board.BOARD_BEST, orderByColumn, startIndex, Board.LIST_AMOUNT);
 
             ResultSet rs = st.executeQuery(sql);
 

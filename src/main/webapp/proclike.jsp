@@ -53,6 +53,7 @@ try {
 }
 response.sendRedirect("rouletteList.jsp");
 %>
-
+<!-- todo: 지난 주간 좋아요 혹은 지난 월간 좋아요 페이지를 어떻게 남길것인가? 서버에 저장?매주말,월말에?  이방법도 가능하지만, 스케쥴러를 이용할 수 도있다.  Spring이라면 Task Scheduler
+그러나 jsp는 내장기능 없으므로 Java의 Timer 및 TimerTask 클래스를 사용-->
 </body>
 </html>

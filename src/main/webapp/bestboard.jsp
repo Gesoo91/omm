@@ -57,7 +57,7 @@
 	if(pageNum==null){
 		pageNum="1";
 	}
-	
+	String orderByColumn = "r_total_like"; 
 	DaoBoard dao = new DaoBoard();	
 	int count = dao.getPostCountBest();	// 전체 글 수
 	
@@ -71,7 +71,7 @@
 	
 	
 	
-	ArrayList<RouletteDto> posts=dao.listBest(pageNum);
+	ArrayList<RouletteDto> posts=dao.listBest(pageNum, orderByColumn);
 	
 	for(int i=0;i<posts.size();i=i+1){
 	%>

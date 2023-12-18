@@ -83,8 +83,9 @@ public class Controller extends HttpServlet {
 				System.out.println("베스트 보드");
 				nextPage="/bestboard.jsp";
 				String page = request.getParameter("page");
+				String orderByColumn = request.getParameter("orderByColumn");
 				System.out.println("page:"+page);
-				ArrayList<RouletteDto> bestposts = service.listBest(page);
+				ArrayList<RouletteDto> bestposts = service.listBest(page, orderByColumn);
 				request.setAttribute("posts", bestposts);
 				break;
 			case "/weeklyBest":
@@ -92,8 +93,9 @@ public class Controller extends HttpServlet {
 						+ "");
 				nextPage="/weeklyBest.jsp";
 				String page2 = request.getParameter("page");
+				String orderByColumn2 = request.getParameter("orderByColumn");
 				System.out.println("page:"+page2);
-				ArrayList<RouletteDto> weeklybestposts = service.listBest(page2);
+				ArrayList<RouletteDto> weeklybestposts = service.listBest(page2, orderByColumn2);
 				request.setAttribute("posts", weeklybestposts);
 				break;	
 			}

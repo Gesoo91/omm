@@ -30,11 +30,11 @@ public class Service {
 	public void edit(BoardDto d,String no) {
 		dao.edit(d,no);
 	}
-	public ArrayList<RouletteDto> listBest(String page) {
+	public ArrayList<RouletteDto> listBest(String page, String orderByColumn) {
 		if(page==null) {
 			page="1";
 		}
-		return dao.listBest(page);
+		return dao.listBest(page, orderByColumn);
 	}
 	
 }
