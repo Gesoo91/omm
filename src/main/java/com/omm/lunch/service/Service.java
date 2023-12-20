@@ -36,7 +36,9 @@ public class Service {
 		}
 		return dao.listBest(page, orderByColumn);
 	}
-	
+	public void addMenu(RouletteDto menu) {
+		dao.addMenu(menu);
+	}
 }
 
 

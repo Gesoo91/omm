@@ -108,6 +108,19 @@ public class Controller extends HttpServlet {
 				ArrayList<RouletteDto> monthbestposts = service.listBest(page3, orderByColumn3);
 				request.setAttribute("posts", monthbestposts);
 				break;
+			
+			case "/addMenu":
+				System.out.println("메뉴추가");
+				nextPage="/";
+				RouletteDto menu = new RouletteDto(
+						category,
+						request.getParameter("menu"),
+						request.getParameter("category"),
+						request.getParameter("id")
+						);
+				service.addMenu(menu);	
+				
+				break;
 			}
 			RequestDispatcher d = request.getRequestDispatcher(nextPage);
 			d.forward(request,response);
