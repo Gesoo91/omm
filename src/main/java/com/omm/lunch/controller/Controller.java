@@ -98,6 +98,16 @@ public class Controller extends HttpServlet {
 				ArrayList<RouletteDto> weeklybestposts = service.listBest(page2, orderByColumn2);
 				request.setAttribute("posts", weeklybestposts);
 				break;	
+			case "/monthBest":
+				System.out.println("베스트 보드"
+						+ "");
+				nextPage="/monthBest.jsp";
+				String page3 = request.getParameter("page");
+				String orderByColumn3 = request.getParameter("orderByColumn");
+				System.out.println("page:"+page3);
+				ArrayList<RouletteDto> monthbestposts = service.listBest(page3, orderByColumn3);
+				request.setAttribute("posts", monthbestposts);
+				break;
 			}
 			RequestDispatcher d = request.getRequestDispatcher(nextPage);
 			d.forward(request,response);

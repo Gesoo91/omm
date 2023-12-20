@@ -273,7 +273,8 @@ public class DaoBoard extends Dao{
                         rs.getString("r_menu"),
                         rs.getString("r_category"),
                         rs.getString("r_total_like"),
-                        rs.getString("r_weekly_like")
+                        rs.getString("r_weekly_like"),
+                        rs.getString("r_month_like")
                         // ... (다른 필요한 속성들 추가)
                 ));
             }

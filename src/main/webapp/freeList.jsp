@@ -3,7 +3,7 @@
 <%@page import="java.util.ArrayList"%>
 <%@page import="com.omm.lunch.board.Board"%>
 <%@page import="com.omm.lunch.dao.DaoBoard"%>
-<%@page import="com.omm.lunch.dto.Dto"%>
+<%@page import="com.omm.lunch.dto.BoardDto"%>
 <%@page import="com.omm.lunch.board.BoardListProcessor"%>
 <%@page import="java.sql.ResultSet"%>
 <%@page import="java.sql.Statement"%>
@@ -19,7 +19,7 @@
 <%
 BoardListProcessor blp = (BoardListProcessor)request.getAttribute("blp");
 System.out.println("리스트에서blp:"+blp);
-ArrayList<Dto> posts = blp.getPosts();
+ArrayList<BoardDto> posts = blp.getPosts();
 
 %>
 <fieldset>

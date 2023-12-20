@@ -24,11 +24,14 @@ try {
     // 현재 날짜와 주를 가져오기
     Calendar cal = Calendar.getInstance();
     int currentWeek = cal.get(Calendar.WEEK_OF_YEAR);
+    int currentMonth = cal.get(Calendar.MONTH) + 1;
 
     // 좋아요 업데이트 쿼리
-    String updateQuery = "UPDATE omm_roulette " +
-                         "SET r_total_like = r_total_like + 1, r_weekly_like = r_weekly_like + 1 " +
-                         "WHERE r_no = " + num;
+	String updateQuery = "UPDATE omm_roulette " +
+	                     "SET r_total_like = r_total_like + 1, " +
+	                     "    r_weekly_like = r_weekly_like + 1, " +
+	                     "    r_month_like = r_month_like + 1 " +
+	                     "WHERE r_no = " + num;
 
     // 쿼리 실행
     int rowsAffected = st.executeUpdate(updateQuery);
@@ -40,8 +43,12 @@ try {
         String resetWeeklyLikeQuery = "UPDATE omm_roulette " +
                                       "SET r_weekly_like = 0 " +
                                       "WHERE YEARWEEK(r_like_time) < " + currentWeek;
-
+    	// 한 달이 지나면 주간 좋아요 초기화
+        String resetMonthLikeQuery = "UPDATE omm_roulette " +
+                                      "SET r_month_like = 0 " +
+                                      "WHERE YEARWEEK(r_like_time) < " + currentMonth;
         st.executeUpdate(resetWeeklyLikeQuery);
+        st.executeUpdate(resetMonthLikeQuery);
     } else {
         out.println("좋아요 업데이트에 실패했습니다.");
     }

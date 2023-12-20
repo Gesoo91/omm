@@ -26,7 +26,7 @@
 					<li class="tab_head">베스트 게시판</li>
 					<li><a href="/lunch/bestboard">best</a></li><!-- 마우스 오버해서 아래로 li 펼쳐지게 하기. -->
 					<li><a href="/lunch/weeklyBest">이번주 최다선택</a></li>
-					<li>이번달 최고만족</li>
+					<li><a href="/lunch/monthBest">이번달 최고만족</a></li>
 					<li>먹잘알</li>
 					
 				</ul>
