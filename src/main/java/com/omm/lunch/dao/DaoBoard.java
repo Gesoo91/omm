@@ -289,12 +289,12 @@ public class DaoBoard extends Dao{
 	public void addMenu(RouletteDto menu) {
 		super.connect();	//[고정1,2,3]
 		String sql = String.format(
-				"insert into %s (r_category,r_menu,r_user_id,r_no) values ('%s','%s','%s','%s')"
-				,Board.BOARD_MAIN
-				,menu.category
+				"insert into %s (r_menu,r_category,r_user_id) values ('%s','%s','%s')"
+				,Board.BOARD_BEST
 				,menu.menu
+				,menu.category
 				,menu.id
-				,menu.no);
+				);
 		System.out.println("쓰기sql:"+sql);
 		super.update(sql);
 		super.close();	//[고정4,5]

@@ -111,7 +111,7 @@ public class Controller extends HttpServlet {
 			
 			case "/addMenu":
 				System.out.println("메뉴추가");
-				nextPage="/";
+				nextPage="../lunch";
 				RouletteDto menu = new RouletteDto(
 						category,
 						request.getParameter("menu"),
