@@ -263,9 +263,9 @@ public class DaoBoard extends Dao{
             
             // 수정된 부분
             String sql = String.format(
-                    "select * from %s order by %s desc limit %s,%s",
+                    "select * from %s order by %s desc, r_total_like DESC limit %s,%s",
                     Board.BOARD_BEST, orderByColumn, startIndex, Board.LIST_AMOUNT);
-
+            //orderByColumn 으로 각 페이지별 정렬 기준잡고, 그다음 total_like 순으로 한번더 정 
             ResultSet rs = st.executeQuery(sql);
 
             while (rs.next()) {

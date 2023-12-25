@@ -1,4 +1,4 @@
-<%@page import="com.omm.lunch.dto.Dto"%>
+<%@page import="com.omm.lunch.dto.BoardDto"%>
 <%@page import="com.omm.lunch.dao.DaoBoard"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
@@ -10,7 +10,7 @@
 </head>
 <body>
 <%
-Dto d=(Dto)request.getAttribute("post");
+BoardDto d=(BoardDto)request.getAttribute("post");
 String category = request.getParameter("category");
 %>
 카테고리:<%=d.category%>
