@@ -43,9 +43,6 @@ public class Service {
 	public RouletteResult roulette () {
 		return dao.performRoulette();
 	}
-//	public ArrayList<RouletteDto> subroulette() {
-//		return dao.subroulette();
-//	}
 }
 
 
