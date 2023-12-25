@@ -14,6 +14,7 @@ import com.omm.lunch.dto.BoardDto;
 import com.omm.lunch.dto.RouletteDto;
 import com.omm.lunch.service.Service;
 import com.omm.lunch.board.BoardListProcessor;
+import com.omm.lunch.dao.DaoBoard.RouletteResult;
 
 @WebServlet("/lunch/*")
 public class Controller extends HttpServlet {
@@ -120,6 +121,12 @@ public class Controller extends HttpServlet {
 						);
 				service.addMenu(menu);	
 				
+				break;
+			case "/roulette":
+				System.out.println("읽기");
+				nextPage="/rouletteList.jsp";
+				RouletteResult d2=service.roulette();
+				request.setAttribute("post", d2);
 				break;
 			}
 			RequestDispatcher d = request.getRequestDispatcher(nextPage);

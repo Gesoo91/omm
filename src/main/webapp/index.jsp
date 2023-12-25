@@ -52,10 +52,7 @@
 	<div id="container">
 		<div id="roulette_wrap">
 			<div id="roulette">
-				<img alt="*" src="룰렛">
-				<form action="rouletteList.jsp">
-					<input type="submit" value="오늘 뭐먹지?"><!-- click을 넣던가 버튼 누르면 js실행되게 짜보면될듯. -->
-				</form>
+				<a href="/lunch/roulette">오늘 뭐먹지?</a>
 			</div>
 		</div>
 	</div>

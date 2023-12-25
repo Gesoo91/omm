@@ -2,6 +2,7 @@ package com.omm.lunch.service;
 import java.util.ArrayList;
 
 import com.omm.lunch.dao.DaoBoard;
+import com.omm.lunch.dao.DaoBoard.RouletteResult;
 import com.omm.lunch.dto.BoardDto;
 import com.omm.lunch.dto.RouletteDto;
 import com.omm.lunch.board.BoardListProcessor;
@@ -39,6 +40,12 @@ public class Service {
 	public void addMenu(RouletteDto menu) {
 		dao.addMenu(menu);
 	}
+	public RouletteResult roulette () {
+		return dao.performRoulette();
+	}
+//	public ArrayList<RouletteDto> subroulette() {
+//		return dao.subroulette();
+//	}
 }
 
 

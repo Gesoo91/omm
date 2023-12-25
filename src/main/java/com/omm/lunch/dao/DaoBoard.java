@@ -230,30 +230,7 @@ public class DaoBoard extends Dao{
 		super.close();	//[고정4,5]
 		return posts;
 	}
-	/* 총 페이지 수 구하기 */
-	public int getTotalPageCount() {
-		int totalPageCount = 0;
-		int count = getPostCount(null);	//만든거 재활용.
-		
-		if(count % 5 == 0){		//case1. 나머지가 없이 딱 떨어지는 경우
-			totalPageCount = count / 5;
-		}else{					//case2. 나머지가 있어서 짜투리 페이지가 필요한 경우
-			totalPageCount = count / 5 + 1;
-		}
-		return totalPageCount;
-	}	
-	/* 총 페이지 수 구하기<검색> */
-	public int getSearchTotalPageCount(String category, String word) {
-		int totalPageCount = 0;
-		int count = getSearchPostCount(category, word);
-		
-		if(count % 5 == 0){		//case1. 나머지가 없이 딱 떨어지는 경우
-			totalPageCount = count / 5;
-		}else{					//case2. 나머지가 있어서 짜투리 페이지가 필요한 경우
-			totalPageCount = count / 5 + 1;
-		}
-		return totalPageCount;
-	}
+	/* 베스트 게시판 리스트*/
 	public ArrayList<RouletteDto> listBest(String page, String orderByColumn) {
         super.connect();
         ArrayList<RouletteDto> posts = new ArrayList<>();
@@ -286,6 +263,8 @@ public class DaoBoard extends Dao{
 
         return posts;
     }
+	
+	/* 룰렛 메뉴 추가*/
 	public void addMenu(RouletteDto menu) {
 		super.connect();	//[고정1,2,3]
 		String sql = String.format(
@@ -299,5 +278,89 @@ public class DaoBoard extends Dao{
 		super.update(sql);
 		super.close();	//[고정4,5]
 	}
-	
+	public class RouletteResult {
+        private final RouletteDto rouletteResult;
+        private final ArrayList<RouletteDto> subRouletteResults;
+
+        public RouletteResult(RouletteDto rouletteResult, ArrayList<RouletteDto> subRouletteResults) {
+            this.rouletteResult = rouletteResult;
+            this.subRouletteResults = subRouletteResults;
+        }
+
+        public RouletteDto getRouletteResult() {
+            return rouletteResult;
+        }
+
+        public ArrayList<RouletteDto> getSubRouletteResults() {
+            return subRouletteResults;
+        }
+    }
+    public RouletteResult performRoulette() {
+        super.connect();
+        RouletteDto rouletteResult = null;
+        ArrayList<RouletteDto> subRouletteResults = new ArrayList<>();
+
+        try {
+            int randomValue = generateRandom();
+
+            // 룰렛 실행
+            String rouletteSql = String.format(
+                "SELECT * FROM %s WHERE r_no = %d",
+                Board.BOARD_BEST,
+                randomValue
+            );
+            System.out.println("룰렛sql:" + rouletteSql);
+            ResultSet rouletteRs = st.executeQuery(rouletteSql);
+            rouletteRs.next();
+            rouletteResult = new RouletteDto(
+                String.valueOf(rouletteRs.getInt("r_no")),
+                rouletteRs.getString("r_menu"),
+                rouletteRs.getString("r_category"),
+                rouletteRs.getString("r_user_id"),
+                rouletteRs.getString("r_total_like"),
+                rouletteRs.getString("r_weekly_like")
+            );
+
+            // 서브 룰렛 실행
+            String subRouletteSql = String.format(
+                "SELECT * FROM %s WHERE r_category = (SELECT r_category FROM %s WHERE r_no = %d) AND r_no != %d ORDER BY RAND() LIMIT 5",
+                Board.BOARD_BEST,
+                Board.BOARD_BEST,
+                randomValue,
+                randomValue
+            );
+            System.out.println(subRouletteSql);
+            ResultSet subRouletteRs = st.executeQuery(subRouletteSql);
+            while (subRouletteRs.next()) {
+                subRouletteResults.add(new RouletteDto(
+                    subRouletteRs.getString("r_menu"),
+                    subRouletteRs.getString("r_category"),
+                    subRouletteRs.getString("r_total_like")
+                ));
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            super.close();
+        }
+
+        return new RouletteResult(rouletteResult, subRouletteResults);
+    }
+
+    private int generateRandom() {
+        int random = 0;
+        try {
+            String sql = String.format("SELECT COUNT(r_no) FROM %s", Board.BOARD_BEST);
+            ResultSet countRs = st.executeQuery(sql);
+            if (countRs.next()) {
+                int count_no = countRs.getInt(1);
+                random = (int) Math.floor(Math.random() * count_no) + 1;
+            }
+            countRs.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return random;
+    }
+
 }
