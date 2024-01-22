@@ -43,6 +43,10 @@ public class Service {
 	public RouletteResult roulette () {
 		return dao.performRoulette();
 	}
+	public String processLike(String num) {
+        dao.processLike(num);
+		return "좋아요 업데이트 완료";
+	}
 }
 
 

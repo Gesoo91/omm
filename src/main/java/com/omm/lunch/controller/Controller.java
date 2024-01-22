@@ -128,7 +128,14 @@ public class Controller extends HttpServlet {
 				RouletteResult d2=service.roulette();
 				request.setAttribute("post", d2);
 				break;
+			case "/proclike":
+				System.out.println("좋아요");
+				nextPage="/rouletteList.jsp";
+				service.processLike(request.getParameter("num"));
+				System.out.println("좋아요업데이트 in controller");
+				break;
 			}
+				
 			RequestDispatcher d = request.getRequestDispatcher(nextPage);
 			d.forward(request,response);
 			
